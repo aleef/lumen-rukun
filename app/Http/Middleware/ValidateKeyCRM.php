@@ -26,7 +26,7 @@ class ValidateKeyCRM
 			$response['status'] = 'error';
 			$response['message'] = "Unauthorized Access";
 			// return json response
-			return Response::json($response);
+			return response()->json($response);
 
 			//print_r($header);
 		

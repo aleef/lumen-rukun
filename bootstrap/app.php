@@ -58,19 +58,17 @@ $app->singleton(
 */
 
 $app->middleware([
-     App\Http\Middleware\ExampleMiddleware::class
+     App\Http\Middleware\ExampleMiddleware::class,
+    App\Http\Middleware\CorsMiddleware::class
 ]);
-
 $app->routeMiddleware([
      'auth' => App\Http\Middleware\Authenticate::class,
-]);
-$app->routeMiddleware([
     'ValidateKey' => App\Http\Middleware\ValidateKey::class,
-]);
-$app->routeMiddleware([
     'ValidateKeyCRM' => App\Http\Middleware\ValidateKeyCRM::class,
 ]);
 
+
+$app->register(App\Providers\CatchAllOptionsRequestsProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
