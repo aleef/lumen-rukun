@@ -286,11 +286,11 @@ class CountryController extends Controller
 	}
 
 	/*==  List Data Kabkota based on Kecl==*/
-	public function kab_kec($kel_id, Request $request, Kab $kab) 
+	public function kab_kec($kec_id, Request $request, Kab $kab) 
 	{
 
 		// validate param
-		if($kel_id=='')
+		if($kec_id=='')
 		{
 			$response['status'] = "error";
 			$response['message'] = "Kel is required fields";
@@ -299,7 +299,7 @@ class CountryController extends Controller
 		}
 
 		// get data
-		$kab = $kab->get_kab($kel_id);
+		$kab = $kab->get_kab($kec_id);
 		if(empty($kab))
 		{
 			$response['status'] = "error";

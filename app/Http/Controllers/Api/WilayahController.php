@@ -138,10 +138,10 @@ class WilayahController extends Controller
 
 
 		/*==  Detail ==*/
-	public function detailcrm($id, Request $request)
+	public function detailcrm($wil_id, Request $request)
 		{
 			// get data
-			$info = Wilayah::find($id);
+			$info = Wilayah::find($wil_id);
 			/*$info =DB::table('wilayah as a')
 			->join('warga as b','b.wil_id','=','a.wil_id')
 			->join('pengurus as c','c.warga_id','=','b.warga_id')
@@ -175,12 +175,12 @@ class WilayahController extends Controller
 			//return response()->json($response);
 			return $info;
 	}
-	public function detailadmin($id)
+	public function detailadmin($wil_id)
 	{
 			// get data
 			$info =DB::table('warga as b')
 			->join('pengurus as c','c.warga_id','=','b.warga_id')
-			->where('b.wil_id',$id)
+			->where('b.wil_id',$wil_id)
 			->select('b.*', 'c.pengurus_jabatan', 'c.pengurus_id')
 			->first();
 			//return $info;
@@ -513,19 +513,20 @@ class WilayahController extends Controller
 		if($wil_foto!='')
 		{
 			// destination path
-			$destination_path = public_path('img/wilayah/');
+			$destination_path = base_path()."/public/img/wilayah/";
 			$img = $wil_foto;
 
 			// upload
-			$md5_name = uniqid()."_".md5_file($img->getRealPath());
 			$ext = $img->getClientOriginalExtension();
-			$img->move($destination_path,"$md5_name.$ext");
-			$img_file = "$md5_name.$ext";
+			$md5_name = "foto-" . uniqid() . "_" . md5_file($img->getRealPath()).".".$ext;
+			$request->file('wil_foto')->move($destination_path, $md5_name);
+			$img_file = "$md5_name";
+			//$img->move($destination_path,"$md5_name.$ext");
 
 			// resize photo
-			$img = Image::make(URL("public/img/wilayah/$md5_name.$ext"));
-			$img->fit(500);
-			$img->save(public_path("img/wilayah/$md5_name.$ext"));
+			//$img = Image::make(URL("public/img/wilayah/$md5_name.$ext"));
+			//$img->fit(500);
+			//$img->save(base_path()."img/wilayah/$md5_name.$ext");
 
 			// set data
 			$wilayah->wil_foto = $img_file;
@@ -536,20 +537,27 @@ class WilayahController extends Controller
 		if($wil_logo!='')
 		{
 			// destination path
-			$destination_path = public_path('img/logo_wilayah/');
+			// $destination_path = public_path('img/logo_wilayah/');
+			// $img = $wil_logo;
+
+			// // upload
+			// $md5_name = uniqid()."_".md5_file($img->getRealPath());
+			// $ext = $img->getClientOriginalExtension();
+			// $img->move($destination_path,"$md5_name.$ext");
+			// $img_file = "$md5_name.$ext";
+
+			// // resize photo
+			// $img = Image::make(URL("public/img/logo_wilayah/$md5_name.$ext"));
+			// $img->fit(500);
+			// $img->save(public_path("img/logo_wilayah/$md5_name.$ext"));
+			$destination_path = base_path() . "/public/img/logo_wilayah/";
 			$img = $wil_logo;
 
 			// upload
-			$md5_name = uniqid()."_".md5_file($img->getRealPath());
 			$ext = $img->getClientOriginalExtension();
-			$img->move($destination_path,"$md5_name.$ext");
-			$img_file = "$md5_name.$ext";
-
-			// resize photo
-			$img = Image::make(URL("public/img/logo_wilayah/$md5_name.$ext"));
-			$img->fit(500);
-			$img->save(public_path("img/logo_wilayah/$md5_name.$ext"));
-
+			$md5_name = "foto-" . uniqid() . "_" . md5_file($img->getRealPath()) . "." . $ext;
+			$request->file('wil_logo')->move($destination_path, $md5_name);
+			$img_file = "$md5_name";
 			// set data
 			$wilayah->wil_logo = $img_file;
 
