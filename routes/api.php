@@ -417,6 +417,7 @@ Route::group(['middleware' => 'ValidateKey'], function () {
 
 Route::post('midtrans/callback', 'Api\MidtransController@callback');
 Route::post('backupdownload/export', 'Api\BackupDownloadController@export');
+Route::get('midtrans/test', 'Api\MidtransController@test');
 
 
 //buat CRM menghindari override authorization di Safari

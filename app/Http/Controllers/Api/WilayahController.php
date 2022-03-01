@@ -524,9 +524,11 @@ class WilayahController extends Controller
 			//$img->move($destination_path,"$md5_name.$ext");
 
 			// resize photo
-			//$img = Image::make(URL("public/img/wilayah/$md5_name.$ext"));
-			//$img->fit(500);
-			//$img->save(base_path()."img/wilayah/$md5_name.$ext");
+			$img = Image::make(URL("public/img/wilayah/$md5_name"));
+			$img->resize(600,null, function ($constraint) {
+				$constraint->aspectRatio();
+			});
+			$img->save(base_path()."/public/img/wilayah/$md5_name");
 
 			// set data
 			$wilayah->wil_foto = $img_file;

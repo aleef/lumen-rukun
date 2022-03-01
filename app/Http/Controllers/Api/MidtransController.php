@@ -14,6 +14,7 @@ use App\Periodetagihan;
 use App\VoucherWil;
 use App\Warga;
 use App\Wilayah;
+use App\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Midtrans\Config;
@@ -1231,5 +1232,10 @@ class MidtransController extends Controller
 
     public function error() {
         return view('midtrans.error');
+    }
+
+    public function test(){
+        $test = Payment::getPaymentUrl(1,'100000','alif','auliafr@gmail.com');
+        echo $test;
     }
 }
